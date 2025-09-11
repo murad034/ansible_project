@@ -1,0 +1,61 @@
+- name: Create Folder and Install Docker
+  hosts: all
+
+  vars:
+    nginx_port: 80
+    nginx_server_name: example.com
+    is_true: true
+
+    students:
+      - Sourav
+      - John
+      - Doe
+      - Smith
+
+    teacher:
+      name: Ashik Tonmoy
+      about: Sr. DevOps Engineer
+      company: Selese
+    
+    TA:
+      - name: Murad
+        about: Senior Software Engineer
+        company: Business Automation Ltd.
+
+      - name: Rifat
+        about: Junior Software Engineer
+        company: Business Automation Ltd.
+
+  tasks:
+    - name: Print Nginx nginx_port
+      debug:
+        msg: "Nginx will run on port {{nginx_port}}"
+
+    - name: print Teacher Info
+      debug: 
+        msg: "Teacher Name is {{TA[0].name}} and he works at {{TA[0].company}}"
+
+    - name: Create a directory
+      file:
+        path: /home/ubuntu/ostad
+        state: directory
+
+    - name: Apt Update
+      become: yes
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      become: yes
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Run ls Command
+      # command: ls -l
+      shell: ls -l
+
+
+
+    
