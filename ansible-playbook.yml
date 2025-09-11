@@ -56,6 +56,20 @@
       # command: ls -l
       shell: ls -l
 
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+      notify: restart nginx
+
+  handlers:
+    - name: restart nginx
+      become: yes
+      service:
+        name: nginx
+        state: restarted
+
 
 
     
