@@ -63,6 +63,26 @@
         update_cache: yes
       notify: restart nginx
 
+    - name: copy the index.html file to web server
+      become: true
+      template:
+        src: index.html
+        dest: /var/www/html/index.html
+      notify: restart nginx
+      when: 
+        - is_true
+        - nginx_port == 80
+
+    - name: copy multiple files to web server /var/www/html
+      become: true
+      copy:
+        src: "{{ item }}"
+        dest: /var/www/html/
+      loop:
+        - about.html
+        - contact.html
+      notify: restart nginx
+
   handlers:
     - name: restart nginx
       become: yes
